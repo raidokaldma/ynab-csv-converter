@@ -1,0 +1,19 @@
+{
+  "name": "ynab-csv-converter",
+  "version": "1.0.0",
+  "description": "Converts bank account statements to YNAB compatible format. Supports following banks: Nordea, Swedbank",
+  "main": "index.js",
+  "scripts": {
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "csv": "1.1.1",
+    "es6-promisify": "5.0.0",
+    "firstline": "1.2.1",
+    "moment": "2.18.1",
+    "node-notifier": "5.1.2",
+    "parse-float": "0.1.1",
+    "text-encoding": "0.6.4"
+  }
+}
