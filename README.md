@@ -1,9 +1,10 @@
 # YNAB CSV converter
 Script for converting bank account statements into YNAB compatible CSV file
 
-Currently supported Estonian banks:
-* Swedbank
-* Nordea
+Currently supported banks:
+* Swedbank (Estonia)
+* Nordea (Estonia)
+* Revolut
 
 ## Making it available as right click menu item in Mac OS X
 * Service receives selected "Files or folders" in "Finder.app"

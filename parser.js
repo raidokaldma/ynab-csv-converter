@@ -1,14 +1,13 @@
 const fs = require('fs');
-const csv = require('csv');
 const promisify = require("es6-promisify");
-const stringifyCSV = promisify(csv.stringify);
 const firstline = require('firstline');
 const nordeaParser = require('./nordea-parser');
 const swedbankParser = require('./swedbank-parser');
+const revolutParser = require('./revolut-parser');
 
 function _findParser(fileName) {
     return firstline(fileName).then(headerRow => {
-        let parser = [nordeaParser, swedbankParser].find(parser => parser.canParse(headerRow));
+        let parser = [nordeaParser, swedbankParser, revolutParser].find(parser => parser.canParse(headerRow));
         if (!parser) {
             throw new Error('Unknown file format');        
         }
@@ -23,5 +22,5 @@ function parse(fileName) {
 
 module.exports = {
     parse: parse
-}
+};
 

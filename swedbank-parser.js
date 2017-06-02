@@ -37,4 +37,4 @@ function parse(fileName) {
 module.exports = {
     canParse,
     parse
-}
+};

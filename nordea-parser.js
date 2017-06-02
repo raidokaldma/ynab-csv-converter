@@ -4,7 +4,6 @@ const promisify = require("es6-promisify");
 const parseFloat = require('parse-float');
 const moment = require('moment');
 const parseCSV = promisify(csv.parse);
-const stringifyCSV = promisify(csv.stringify);
 const textEncoding = require('text-encoding');
 
 function canParse(firstLine) {
@@ -43,4 +42,4 @@ function parse(fileName) {
 module.exports = {
     canParse,
     parse
-}
+};

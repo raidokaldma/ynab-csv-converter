@@ -23,4 +23,7 @@ return parser.parse(fileIn).then(ynabData => {
         fs.writeFileSync(fileOut, resultCSV);
         notifier.notify({title: 'YNAB parser', message: `Created ${fileOut}`});
     }); 
+}).catch(err => {
+    console.error('YNAB conversion failed', err);
+    process.exit(1);
 });
