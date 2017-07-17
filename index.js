@@ -16,11 +16,12 @@ if (!fileIn) {
 
 let directory = path.dirname(fileIn);
 let fileInName = path.basename(fileIn, '.csv');
-let fileOut = path.join(directory, `${fileInName}-ynab.csv`);
+let fileOut = path.join(directory, `YNAB-${fileInName}.csv`);
 
 return parser.parse(fileIn).then(ynabData => {
     return stringifyCSV(ynabData, {header: true}).then(resultCSV => {
         fs.writeFileSync(fileOut, resultCSV);
+        fs.unlinkSync(fileIn);
         notifier.notify({title: 'YNAB parser', message: `Created ${fileOut}`});
     }); 
 }).catch(err => {
