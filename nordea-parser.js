@@ -21,7 +21,10 @@ function parse(fileName) {
             let memo = row['Selgitus'];
             let payee = row['Saaja/Maksja nimi'] || 'Nordea';
 
-            let cardPaymentMatch = memo.match(/^Kaarditehing (\d+)(.*?)\d{2}.\d{2}.\d{2}\s\d{2}:\d{2}:\d{2}.*/) 
+            // Remove noise
+            memo = memo.replace('Pangasisene Db tehing ', '');
+
+            let cardPaymentMatch = memo.match(/^Kaarditehing (\d+)(.*?)\d{2}.\d{2}.\d{2}\s\d{2}:\d{2}:\d{2}.*/)
             if (cardPaymentMatch) {
                 memo = `Card ${cardPaymentMatch[1]}`;
                 payee = cardPaymentMatch[2];
