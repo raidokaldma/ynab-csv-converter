@@ -1,12 +1,7 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const csv = require('csv');
-const promisify = require("es6-promisify");
-const stringifyCSV = promisify(csv.stringify);
-const parser = require('./parser');
+const converter = require('./ynab-csv-converter');
 const notifier = require('node-notifier');
-const path = require('path');
 
 let fileIn = process.argv[2];
 if (!fileIn) {
@@ -14,17 +9,16 @@ if (!fileIn) {
     process.exit(1);
 }
 
-let directory = path.dirname(fileIn);
-let fileInName = path.basename(fileIn, '.csv');
-let fileOut = path.join(directory, `YNAB-${fileInName}.csv`);
+async function convertAndNotify() {
+    try {
+        let fileOut = await converter.convertToYNABCSV(fileIn);
+        notifier.notify({title: 'YNAB transformer', message: `Created ${fileOut}`});
+    }
+    catch(err) {
+        console.error(`YNAB conversion failed with: ${err.message}`);
+        process.exit(1);
+    }
+}
 
-return parser.parse(fileIn).then(ynabData => {
-    return stringifyCSV(ynabData, {header: true}).then(resultCSV => {
-        fs.writeFileSync(fileOut, resultCSV);
-        fs.unlinkSync(fileIn);
-        notifier.notify({title: 'YNAB parser', message: `Created ${fileOut}`});
-    }); 
-}).catch(err => {
-    console.error('YNAB conversion failed', err);
-    process.exit(1);
-});
+// noinspection JSIgnoredPromiseFromCall
+convertAndNotify();
