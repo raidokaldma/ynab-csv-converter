@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 const converter = require('./ynab-csv-converter');
-const notifier = require('node-notifier');
+const NotificationCenter = require('node-notifier').NotificationCenter;
+const notifier = new NotificationCenter();
 
 let fileIn = process.argv[2];
 if (!fileIn) {
@@ -12,7 +13,7 @@ if (!fileIn) {
 async function convertAndNotify() {
     try {
         let fileOut = await converter.convertToYNABCSV(fileIn);
-        notifier.notify({title: 'YNAB transformer', message: `Created ${fileOut}`});
+        notifier.notify({title: 'YNAB transformer', message: `Created ${fileOut}`, timeout: 5});
     }
     catch(err) {
         console.error(`YNAB conversion failed with: ${err.message}`);
